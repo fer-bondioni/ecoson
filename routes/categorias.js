@@ -12,20 +12,20 @@ const all = (req, res) =>
     .then((response) => res.json(response))
     .catch((e) => res.status(500).json(e));
 
-const modify = (req, res) =>
-  service
-    .modify(req.body, req.params.id)
-    .then((response) => res.json(response))
-    .catch((e) => res.status(500).json(e));
-
 const create = (req, res) =>
   service
     .create(req.body)
     .then((response) => res.json(response))
     .catch((e) => res.status(500).json(e));
 
+const modify = (req, res) =>
+  service
+    .modify(req.body, req.params.id)
+    .then((response) => res.json(response))
+    .catch((e) => res.status(500).json(e));
+
 router.get("/all", all);
-router.put("/modify/:id", validateModify, modify);
 router.post("/create", validateCreate, create);
+router.put("/modify/:id", validateModify, modify);
 
 module.exports = router;

@@ -9,12 +9,13 @@ const dotenv = require("dotenv");
 const { secured } = require("./middlewares/auth");
 dotenv.config();
 
+var indexRouter = require("./routes/index");
 const noticias = require("./routes/noticias");
 const categorias = require("./routes/categorias");
+const usuarios = require("./routes/users");
 const auth = require("./routes/auth");
 const perfil = require("./routes/perfil");
 const registro = require("./routes/registro");
-const usuarios = require("./routes/usuarios");
 
 var app = express();
 
@@ -29,17 +30,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 
+app.use("/", indexRouter);
 app.use("/noticias", noticias);
-app.use("/categorias", categorias); //habilito localhost:3000/personas
+app.use("/categorias", categorias);
 app.use("/auth", auth);
 app.use("/registro", registro);
-app.use("/usuarios", usuarios);
+app.use("/users", usuarios);
 app.use("/perfil", secured, perfil);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  // next(createError(404));
-  res.status(404).json("message: error");
+  res.status(404).json({ message: "Página no encontrada" });
 });
 
 // error handler
