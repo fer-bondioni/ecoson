@@ -6,6 +6,7 @@ const upload = multer(config);
 const service = require("./../models/noticias");
 const { validateCreate, validateModify } = require("./../middlewares/noticias");
 const service2 = require("./../services/noticias");
+const { secured } = require("../middlewares/auth");
 const all = (req, res) =>
   service
     .all()
@@ -63,11 +64,19 @@ const categoria = async (req, res) => {
   }
   console.log(req.params, req);
 };
+const eliminar = (req, res) => {
+  service
+    .eliminar(req.params.id)
+    .then((response) => res.json(response))
+    .catch((e) => res.status(500).json(e));
+  console.log(req, res);
+};
 
 router.get("/all", all);
 router.get("/single/:id", single);
 router.get("/categoria/:categoria", categoria);
+router.put("/eliminar/:id", eliminar);
+router.put("/modify/:id", modify);
 router.post("/create", upload.single("imagen"), create);
-router.put("/modify/:id", validateModify, modify);
 
 module.exports = router;

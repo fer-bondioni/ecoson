@@ -17,8 +17,9 @@ const schemas = {
     id: Joi.number().integer().positive().required(),
     titulo: Joi.string().min(5).max(20000).optional(),
     texto: Joi.string().optional(),
-    idCategoria: Joi.number().integer().positive().optional(),
+    //idCategoria: Joi.number().integer().positive().optional(),
   }),
 };
+``;
 
 module.exports = { schemas };

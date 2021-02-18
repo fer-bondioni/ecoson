@@ -8,16 +8,16 @@ const { upload } = require("./../utils/S3");
 
 const createNoticia = async (bodyObj, fileObj) => {
   try {
-    const [idNoticia] = await create(bodyObj);
     //const [id] = await create(bodyObj);
-
-    const uid = imgFile(fileObj);
-    console.log("Uid de imagen : ", uid);
-
     // const cat = {
     //   id,
     //   categoria,
     // };
+    const [idNoticia] = await create(bodyObj);
+    //const [idCategoria] = await createCategoria(bodyObj);
+
+    const uid = imgFile(fileObj);
+    console.log("Uid de imagen : ", uid);
 
     const obj = {
       idNoticia,
@@ -28,7 +28,6 @@ const createNoticia = async (bodyObj, fileObj) => {
     const file = `${uid}.${extension}`;
 
     const [idImagen] = await createImages(obj);
-    //const [idCategoria] = await createCategoria(cat);
 
     return upload(file, fileObj.mimetype);
   } catch (e) {
